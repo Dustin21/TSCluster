@@ -1,0 +1,19 @@
+SELECT [USDPID]
+	  ,t2.CIS_CityName
+	  ,t4.CIS_Province
+	  ,t3.CIS_PostalCode
+      ,[ECO_Line2]
+	  ,REPLACE(REPLACE(REPLACE([ECO_Line2], '-', ''), '  ', ''), ' ', '+') + '+' +
+	   t2.CIS_CityName + '+' + t4.CIS_Province + '+' + 
+	   REPLACE(t3.CIS_PostalCode, ' ', '') as FULL_ADDRESS
+	  ,REPLACE(REPLACE(REPLACE([ECO_Line2], '-', ''), '  ', ''), ' ', '+') + '+' + 
+	   t2.CIS_CityName + '+' + t4.CIS_Province as ADDRESS_DROP_PC
+	  ,REPLACE(REPLACE(REPLACE([ECO_Line2], '-', ''), '  ', ''), ' ', '+') + '+' +
+	   t4.CIS_Province + '+' + 
+	   REPLACE(t3.CIS_PostalCode, ' ', '') as ADDRESS_DROP_CITY
+	  ,t2.CIS_CityName + '+' + t4.CIS_Province + '+' + 
+	   REPLACE(t3.CIS_PostalCode, ' ', '') as ADDRESS_DROP_ST
+  FROM [KingstonHydro].[dbo].[CIS_DataStore] as t1
+  INNER JOIN [dbo].[CIS_Cities] as t2 on t2.CIS_CityID = t1.SERV_CityID
+  INNER JOIN [dbo].[CIS_PostalCodes] as t3 on t3.CIS_PostalCodeID = t1.SERV_PostalCode_CleanID
+  INNER JOIN [dbo].[CIS_Provinces] as t4 on t4.CIS_ProvinceID =  t1.SERV_ProvinceID
