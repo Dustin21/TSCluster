@@ -1,5 +1,5 @@
 from sklearn.manifold import TSNE
-
+import os
 
 class DimensionReduction:
 
@@ -21,4 +21,17 @@ class DimensionReduction:
         elif perplexity is None:
             x_embedded = TSNE(n_components=dim, perplexity=30.0).fit_transform(self.data)
             return x_embedded
+
+    def run_largevis(self):
+        path = 'outputs/clean_minmaxNormalized_features.csv'
+        if os.path.isfile(path):
+            os.system("start /wait cmd /c C:/Program Files/R/R-3.3.2/bin/Rscript.exe " +
+                      "C:\Users\dustin.johnson\PycharmProjects\PowerfulInsightEngine" +
+                      "\Rscripts\Dimension_Reduce_Optimized.R")
+        else:
+            print("File required by R does not exist.")
+            exit(1)
+
+
+
 

@@ -19,8 +19,5 @@ feature_normalized = Prepare(feature_data).\
 
 # feature_normalized.to_csv("data\\clean_unNormalized_features.csv")
 
-from DimensionReduction import DimensionReduction
-
-test = DimensionReduction(feature_normalized).run_tsne(perplexity=30.0)
 
 print(test)
