@@ -13,15 +13,6 @@ class Visualizations:
         self.data = data
         self.labels = labels
 
-    def scatter_2d(self, plot_name):
-        labels = pd.DataFrame(self.labels)
-        df = pd.concat([self.data.reset_index(drop=True), labels], axis=1)
-        df.columns = ['X1', 'X2', 'X3', 'clusters']
-        sns_plot = sns.lmplot(x='X1', y='X2', hue='clusters', data=df, palette="husl",
-                                 plot_kws={"s": 1}, vars=["X1", "X2"])
-        sns_plot.savefig(plot_name)
-
-
     def scatter_3d(self, plot_name):
         x = self.data['X1']
         y = self.data['X2']
@@ -54,7 +45,7 @@ class Visualizations:
 
     def pairs_density_plot(self, plot_name):
         sns.set(style="white")
-        g = sns.PairGrid(self.data, diag_sharey=Falses)
+        g = sns.PairGrid(self.data, diag_sharey=False)
         g.map_lower(sns.kdeplot, cmap="Blues_d")
         g.map_upper(plt.scatter)
         g.map_diag(sns.kdeplot, lw=3)
